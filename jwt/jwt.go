@@ -6,7 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var secretKey = []byte("my_secret_key")
+var secretKey = []byte("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjAxODc0OTgsInVzZXJfaWQiOjEyfQ.hcrK9ay082UFc4FoMxVQN_AqkPg_gkl9vvoH7nSzpeE")
 
 type Claims struct {
 	jwt.StandardClaims
