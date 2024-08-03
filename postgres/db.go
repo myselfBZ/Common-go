@@ -4,6 +4,16 @@ import (
     "database/sql"
 )
 
+type Storage interface{
+    Create(*Type) error 
+    GetOne(id string)(*Type, error)
+    // yada yada you know the drill....
+}
+
+
+type Postgresql struct{
+    db *sql.DB
+}
 
 func ConnectDB() *sql.DB {
     connStr := "postgres://user:password@localhost/dbname?sslmode=disable"

@@ -7,6 +7,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+
+
+
+
+type MongoStore struct{
+    db *mongo.Database
+}
+
+
 func ConnectDB() *mongo.Client {
     
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
