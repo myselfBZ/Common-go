@@ -7,15 +7,16 @@ import (
 )
 
 type Middleware interface{
-    Do(http.ResponseWriter, *http.Request)
+    Do(http.ResponseWriter, *http.Request) (error, int)
 }
 
 type Logger struct{
 
 }
 
-func (s *Logger) Do(w http.ResponseWriter, r *http.Request) {
+func (s *Logger) Do(w http.ResponseWriter, r *http.Request) (error, int) {
     log.Printf("{ ip: %s }", r.RemoteAddr)
+    return nil, 0
 }
 
 
@@ -24,7 +25,11 @@ func middlewareFunc(next http.Handler, middlwareFuncs...Middleware) func(http.Re
         start := time.Now()
 
         for _, m := range middlwareFuncs{
-            m.Do(w, r)
+            // stop the chain if one of middleware functions return an error
+            if err, s := m.Do(w, r); err != nil{
+                http.Error(w, err.Error(), s)
+                return 
+            }
         }
 
         defer func(){
